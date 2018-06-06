@@ -1,0 +1,25 @@
+{
+  "name": "FriendFinder.github.io",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "inquirer": "^6.0.0",
+    "requirer": "^0.0.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cpilker/FriendFinder.github.io.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cpilker/FriendFinder.github.io/issues"
+  },
+  "homepage": "https://github.com/cpilker/FriendFinder.github.io#readme"
+}
