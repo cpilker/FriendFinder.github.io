@@ -207,39 +207,34 @@ $(".submit").on("click", function(event) {
         ]
     };
 
-    ////////////////////////////////////
-    // First get the existing friends //
-    ////////////////////////////////////
+    
+    // Grab existing friends //
     $.ajax({ url: currentURL + "/api/friends", method: "GET"   
     }).then(function(friendsData) {   // Existing friends is stored in this variable
 
-        ///////////////////////////////////////////////////////////////////////////////
-        // Second compare newest friend with existing friends and get the best match //
-        ///////////////////////////////////////////////////////////////////////////////
-        let newFriendScore = newFriend.scores.reduce(getSum);   // For new friend, get a total score sum instead of an array of scores
+        // Compare yourself with existing friends  //
+        // Get total score sum instead of an array of scores
+        let newFriendScore = newFriend.scores.reduce(getSum);   
 
-        for (key in friendsData) {   // For each existing friend, get their total score sum instead of an array of scores
-            let friendScore = friendsData[key].scores.reduce(getSum);
+        // For each existing friend, get total score sum instead of an array of scores
+        for (key in friendsData) {   let friendScore = friendsData[key].scores.reduce(getSum);
             counts.push(friendScore);
         }
 
         let bestMatch = counts.reduce((prev, curr) => Math.abs(curr - newFriendScore) < Math.abs(prev - newFriendScore) ? curr : prev);   // ES6 arrow function to compare number to an array of numbers and return closest match, borrowed from https://stackoverflow.com/a/35000557/7303317
-        
-        if (counts.includes(bestMatch)) {   // Search for the array index location of the best match score
-            friendMatch = friendsData[counts.indexOf(bestMatch)];  // The best match is stored in this variable
+        // Search the array index location of the best match score
+        if (counts.includes(bestMatch)) {   
+            //Store match in this variable
+            friendMatch = friendsData[counts.indexOf(bestMatch)];  
         }
 
-        ///////////////////////////////////////////////
-        // Third display the best match on the modal //
-        ///////////////////////////////////////////////
+        // Display variable on the modal //
         $('#bestMatchName').text(friendMatch.name);
         $('#bestMatchImage').html('<img src="' + friendMatch.photo + '" style="max-width: 100%">');
         $('#matchModal').modal('show');
 
-        /////////////////////////////////////////////////////////////////////////////////////////
-        // Fourth merge the newest friend into the existing friends list                       //
-        // Do this last so the above comparison doesn't compare the new friend against itself  //
-        /////////////////////////////////////////////////////////////////////////////////////////
+        // Fourth merge the newest friend into the existing friends list
+        // Done last so the above comparison doesn't compare the new friend against itself  
         $.post("/api/friends", newFriend, function(data) {
             console.log('Friend Added!');
         });
